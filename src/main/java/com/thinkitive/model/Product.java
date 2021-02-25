@@ -9,6 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="product")
 public class Product {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -72,7 +73,11 @@ public class Product {
 		return true;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", productName=" + productName + ", price=" + price + ", description="
+				+ description + "]";
+	}
 	
 	
 	
