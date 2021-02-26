@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="product")
-public class Product {
+public class Product  implements Comparable<Product>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,6 +77,16 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", productName=" + productName + ", price=" + price + ", description="
 				+ description + "]";
+	}
+	@Override
+	public int compareTo(Product p) {
+		if(this.price>p.getPrice())
+			return 1;
+		else
+			if(this.price<p.getPrice())
+				return -1;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

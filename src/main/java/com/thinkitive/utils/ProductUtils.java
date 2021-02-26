@@ -1,5 +1,6 @@
 package com.thinkitive.utils;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +71,16 @@ public class ProductUtils {
 		return pdCrud.pagination(startingIndex, numberOfItems);
 	}
 	
+	public List<Product> getAllSortedList(){
+		List<Product> tmp=getAllProducts();
+		Collections.sort(tmp);
+		return tmp;
+	}
+	
+	public List<Product> getSortedPageList(Integer pageNumber){
+		List<Product> tmp=getPageList( pageNumber);
+		Collections.sort(tmp);
+		return tmp;
+	}
 	
 }

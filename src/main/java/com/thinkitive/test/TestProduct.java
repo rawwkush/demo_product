@@ -1,5 +1,6 @@
 package com.thinkitive.test;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.thinkitive.crud.ProductCRUD;
@@ -17,7 +18,7 @@ public class TestProduct {
 		ProductCRUD crud = new ProductCRUD();
 		Product pd = new Product();
 		pd.setDescription("desc");
-		pd.setPrice(100);
+		pd.setPrice(2);
 		pd.setProductName("myproduct");
 		crud.addProduct(pd);
 	}
@@ -35,7 +36,8 @@ public class TestProduct {
 	
 	public static void displayList() {
 		ProductCRUD crud = new ProductCRUD();
-		List<Product> ls= crud.pagination(1,2);
+		List<Product> ls= crud.getAll();
+		Collections.sort(ls);
 		System.err.println(ls.toString());
 	}
 

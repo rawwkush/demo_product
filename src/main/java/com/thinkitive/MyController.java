@@ -39,6 +39,13 @@ public class MyController {
 		return productUtil.getAllProducts();
 	}
 	
+
+	@GetMapping("/allproducts/sort")
+	public List<Product> getAllSortedProducts() {
+		return productUtil.getAllSortedList();
+	}
+	
+
 	@GetMapping("/products")
 	public List<Product> getProductsByPage(@RequestParam(value = "page")  Integer pagenumber) {
 		return productUtil.getPageList(pagenumber);
@@ -93,5 +100,11 @@ public class MyController {
 		System.err.println("product to category is "+ category);
 		return catUtil.updateCategory(category);
 	}
+	
+	
+	
+	
+	
+	
 	
 }
