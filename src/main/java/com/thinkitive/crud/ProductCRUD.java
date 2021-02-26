@@ -9,9 +9,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Service;
 
 import com.thinkitive.model.Product;
 
+@Service
 public class ProductCRUD {
 
 	public void addProduct(Product pd) {
