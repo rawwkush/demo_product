@@ -34,7 +34,7 @@ public class TestProduct {
 	
 	public static void displayList() {
 		ProductCRUD crud = new ProductCRUD();
-		List<Product> ls= crud.pagination(0);
+		List<Product> ls= crud.pagination(4,2);
 		System.err.println(ls.toString());
 	}
 }

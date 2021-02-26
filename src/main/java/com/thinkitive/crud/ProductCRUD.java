@@ -55,9 +55,6 @@ public class ProductCRUD {
 		Session session = factory.openSession();
 		Transaction tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Product.class).add(Restrictions.eq("id", id));
-
-		// Convenience method to return a single instance that matches
-		// the query, or null if the query returns no results.
 		Product result = (Product) criteria.uniqueResult();
 		System.err.println("deleting this product" + result);
 		if (result == null) {
@@ -66,13 +63,43 @@ public class ProductCRUD {
 			factory.close();
 			throw new Exception("data doesn't exist");
 		} else
-			session.delete(result);
+		session.delete(result);
 		tx.commit();
 		session.close();
 		factory.close();
-
 	}
 
+	public Product getProductById(Integer id) throws Exception {
+		Configuration cfg = new Configuration();
+		cfg.addAnnotatedClass(Product.class);
+		SessionFactory factory = cfg.configure().buildSessionFactory();
+		Session session = factory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Product.class).add(Restrictions.eq("id", id));
+		Product result = (Product) criteria.uniqueResult();
+		tx.commit();
+		session.close();
+		factory.close();
+		if (result == null) {
+			throw new Exception("product doesn't exist");
+		} else
+			return result;
+	}
+
+	public List<Product> getProductsByName(String name) {
+		Configuration cfg = new Configuration();
+		cfg.addAnnotatedClass(Product.class);
+		SessionFactory factory = cfg.configure().buildSessionFactory();
+		Session session = factory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Product.class).add(Restrictions.eq("productName", name));
+		List list = criteria.list();
+		tx.commit();
+		session.close();
+		factory.close();
+		return list;
+	}
+	
 	public List<Product> getAll() {
 		Configuration cfg = new Configuration();
 		cfg.addAnnotatedClass(Product.class);
@@ -87,17 +114,15 @@ public class ProductCRUD {
 		return list;
 	}
 
-	public List<Product> pagination(Integer page) {
+	public List<Product> pagination(Integer startIndex, Integer maxItems) {
 		Configuration cfg = new Configuration();
 		cfg.addAnnotatedClass(Product.class);
 		SessionFactory factory = cfg.configure().buildSessionFactory();
 		Session session = factory.openSession();
 		Transaction tx = session.beginTransaction();
 		Query query = session.createQuery("FROM com.thinkitive.model.Product");
-		int first=(page-1)*10;
-		int last=page*10;
-		query.setFirstResult(first);
-		query.setMaxResults(last);
+		query.setFirstResult(startIndex);
+		query.setMaxResults(maxItems);
 		List list = query.list();
 		tx.commit();
 		session.close();
