@@ -63,12 +63,12 @@ public class ProductUtils {
 
 	
 	public List<Product> getPageList(Integer pageNumber){
-		Integer numberOfItems=10;
-		Integer startingIndex=pageNumber+numberOfItems;
+		Integer numberOfItems=4;
+		Integer startingIndex=0;
+		if(pageNumber>1)
+			startingIndex=(pageNumber-1)*numberOfItems;
 		return pdCrud.pagination(startingIndex, numberOfItems);
 	}
-	
-
 	
 	
 }

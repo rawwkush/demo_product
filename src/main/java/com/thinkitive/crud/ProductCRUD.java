@@ -34,18 +34,19 @@ public class ProductCRUD {
 		SessionFactory factory = cfg.configure().buildSessionFactory();
 		Session session = factory.openSession();
 		Transaction tx = session.beginTransaction();
-		Criteria criteria = session.createCriteria(Product.class).add(Restrictions.eq("id", pd.getId()));
-		// Convenience method to return a single instance that matches
-		// the query, or null if the query returns no results.
-		Product fetchedProduct = (Product) criteria.uniqueResult();
-		if (fetchedProduct == null) {
-			tx.commit();
-			session.close();
-			factory.close();
-			throw new Exception("data not found for updating");
-		}
-		session.update(pd);
-		tx.commit();
+        Product product = (Product) session.load(Product.class, pd.getId());
+        if(pd.getPrice()!=null && pd.getPrice()>0) {
+        	product.setPrice(pd.getPrice());
+        }
+        
+        if(pd.getProductName().length()>0) {
+        	product.setProductName(pd.getProductName());
+        }
+        if(pd.getDescription().length()>0) {
+        	product.setDescription(pd.getDescription());
+        }
+        session.update(product);
+        tx.commit();
 		session.close();
 		factory.close();
 	}

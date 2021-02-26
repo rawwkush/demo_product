@@ -10,6 +10,7 @@ public class TestProduct {
 	//	add();
 	//	delete();
 		displayList();
+		//update();
 	}
 
 	public static void add() {
@@ -34,7 +35,24 @@ public class TestProduct {
 	
 	public static void displayList() {
 		ProductCRUD crud = new ProductCRUD();
-		List<Product> ls= crud.pagination(4,2);
+		List<Product> ls= crud.pagination(1,2);
 		System.err.println(ls.toString());
+	}
+
+	
+	public static void update() {
+		ProductCRUD crud = new ProductCRUD();
+		Product pd = new Product();
+		pd.setId(5);
+		pd.setDescription("askjdbfakjsdbckasjd");
+		pd.setPrice(100);
+		pd.setProductName("ashdfjdsh");
+		try {
+			crud.updateProduct(pd);
+			System.err.println("updates");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

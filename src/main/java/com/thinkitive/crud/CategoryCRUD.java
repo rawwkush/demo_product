@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.thinkitive.model.Category;
+import com.thinkitive.model.Product;
 
 @Service
 public class CategoryCRUD {
@@ -33,17 +34,11 @@ public class CategoryCRUD {
 		SessionFactory factory = cfg.configure().buildSessionFactory();
 		Session session = factory.openSession();
 		Transaction tx = session.beginTransaction();
-		Criteria criteria = session.createCriteria(Category.class).add(Restrictions.eq("id", category.getId()));
-		// Convenience method to return a single instance that matches
-		// the query, or null if the query returns no results.
-		Category result = (Category) criteria.uniqueResult();
-		if (result == null) {
-			tx.commit();
-			session.close();
-			factory.close();
-			throw new Exception("Category not found for updating");
+		Category cat = (Category) session.load(Category.class, category.getId());
+		if (category.getCategoryName().length() > 0) {
+			cat.setCategoryName(category.getCategoryName());
 		}
-		session.update(category);
+		session.update(cat);
 		tx.commit();
 		session.close();
 		factory.close();
@@ -60,13 +55,13 @@ public class CategoryCRUD {
 		// Convenience method to return a single instance that matches
 		// the query, or null if the query returns no results.
 		Category result = (Category) criteria.uniqueResult();
-		System.err.println("deleting this Category"+result);
+		System.err.println("deleting this Category" + result);
 		if (result == null) {
 			tx.commit();
 			session.close();
 			factory.close();
 			throw new Exception("Category doesn't exist");
-		}else
+		} else
 			session.delete(result);
 		tx.commit();
 		session.close();
