@@ -9,7 +9,7 @@ public class TestProduct {
 	public static void main(String[] args) {
 	//	add();
 	//	delete();
-	//	displayList();
+		displayList();
 	}
 
 	public static void add() {
@@ -34,7 +34,7 @@ public class TestProduct {
 	
 	public static void displayList() {
 		ProductCRUD crud = new ProductCRUD();
-		List<Product> ls= crud.getAll();
+		List<Product> ls= crud.pagination(0);
 		System.err.println(ls.toString());
 	}
 }

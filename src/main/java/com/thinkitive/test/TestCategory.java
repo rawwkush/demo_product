@@ -11,11 +11,10 @@ public class TestCategory {
 
 	public static void main(String[] args) {
 		add();
-		delete();
+		//delete();
 		displayList();
 	}
 	
-
 	public static void add() {
 		CategoryCRUD crud = new CategoryCRUD();
 		Category cat = new Category();

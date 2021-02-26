@@ -3,6 +3,7 @@ package com.thinkitive.crud;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -58,13 +59,13 @@ public class ProductCRUD {
 		// Convenience method to return a single instance that matches
 		// the query, or null if the query returns no results.
 		Product result = (Product) criteria.uniqueResult();
-		System.err.println("deleting this product"+result);
+		System.err.println("deleting this product" + result);
 		if (result == null) {
 			tx.commit();
 			session.close();
 			factory.close();
 			throw new Exception("data doesn't exist");
-		}else
+		} else
 			session.delete(result);
 		tx.commit();
 		session.close();
@@ -80,6 +81,24 @@ public class ProductCRUD {
 		Transaction tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Product.class);
 		List list = criteria.list();
+		tx.commit();
+		session.close();
+		factory.close();
+		return list;
+	}
+
+	public List<Product> pagination(Integer page) {
+		Configuration cfg = new Configuration();
+		cfg.addAnnotatedClass(Product.class);
+		SessionFactory factory = cfg.configure().buildSessionFactory();
+		Session session = factory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("FROM com.thinkitive.model.Product");
+		int first=(page-1)*10;
+		int last=page*10;
+		query.setFirstResult(first);
+		query.setMaxResults(last);
+		List list = query.list();
 		tx.commit();
 		session.close();
 		factory.close();
