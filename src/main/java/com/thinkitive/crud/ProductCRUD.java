@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import com.thinkitive.model.Category;
 import com.thinkitive.model.Product;
 
 @Service
@@ -18,7 +19,7 @@ public class ProductCRUD {
 
 	public void addProduct(Product pd) {
 		Configuration cfg = new Configuration();
-		cfg.addAnnotatedClass(Product.class);
+		cfg.addAnnotatedClass(Product.class).addAnnotatedClass(Category.class);
 		SessionFactory factory = cfg.configure().buildSessionFactory();
 		Session session = factory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -39,11 +40,14 @@ public class ProductCRUD {
         	product.setPrice(pd.getPrice());
         }
         
-        if(pd.getProductName().length()>0) {
+        if(!pd.getProductName().isEmpty()) {
         	product.setProductName(pd.getProductName());
         }
-        if(pd.getDescription().length()>0) {
+        if(!pd.getDescription().isEmpty()) {
         	product.setDescription(pd.getDescription());
+        }
+        if(pd.getCategory()!= null) {
+        	product.setCategory(pd.getCategory());
         }
         session.update(product);
         tx.commit();

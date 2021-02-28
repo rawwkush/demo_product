@@ -18,8 +18,7 @@ public class TestCategory {
 	public static void add() {
 		CategoryCRUD crud = new CategoryCRUD();
 		Category cat = new Category();
-		
-		cat.setCategoryName("category1");
+		cat.setCategoryName("category6");
 		crud.addCategory(cat);
 	}
 

@@ -1,48 +1,45 @@
 package com.thinkitive.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "product")
-public class Product implements Comparable<Product> {
+@Table(name = "model")
+public class TestModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer pid;
 	private String productName;
 	private Integer price;
 	private String description;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "category_id")
+	@OneToOne
 	private Category category;
 
-	public Product() {
+	public TestModel() {
 		super();
 	}
 
-	public Product(String productName, Integer price, String description, Category category) {
+	public TestModel(Integer pid, String productName, Integer price, String description, Category category) {
 		super();
+		this.pid = pid;
 		this.productName = productName;
 		this.price = price;
 		this.description = description;
 		this.category = category;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getPid() {
+		return pid;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPid(Integer pid) {
+		this.pid = pid;
 	}
 
 	public String getProductName() {
@@ -78,16 +75,10 @@ public class Product implements Comparable<Product> {
 	}
 
 	@Override
-	public String toString() {
-		return "Product [id=" + id + ", productName=" + productName + ", price=" + price + ", description="
-				+ description + ", category=" + category + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((pid == null) ? 0 : pid.hashCode());
 		return result;
 	}
 
@@ -99,23 +90,19 @@ public class Product implements Comparable<Product> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Product other = (Product) obj;
-		if (id == null) {
-			if (other.id != null)
+		TestModel other = (TestModel) obj;
+		if (pid == null) {
+			if (other.pid != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!pid.equals(other.pid))
 			return false;
 		return true;
 	}
 
 	@Override
-	public int compareTo(Product p) {
-		if (this.price > p.getPrice())
-			return 1;
-		else if (this.price < p.getPrice())
-			return -1;
-		// TODO Auto-generated method stub
-		return 0;
+	public String toString() {
+		return "TestModel [pid=" + pid + ", productName=" + productName + ", price=" + price + ", description="
+				+ description + ", category=" + category + "]";
 	}
 
 }

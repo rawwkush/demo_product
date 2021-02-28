@@ -37,7 +37,8 @@
       <property name="hibernate.show_sql">true</property>
       
       <!-- List of XML mapping files -->
-      
+      <mapping class="com.thinkitive.model.Product"/>
+      <mapping class="com.thinkitive.model.Category"/>
        
       
    </session-factory>
