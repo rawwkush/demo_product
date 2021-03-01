@@ -12,10 +12,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
-public class Product implements Comparable<Product> {
+public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String productName;
 	private Integer price;
@@ -30,7 +30,7 @@ public class Product implements Comparable<Product> {
 	}
 
 	public Product(String productName, Integer price, String description, Category category) {
-		super();
+		this();
 		this.productName = productName;
 		this.price = price;
 		this.description = description;
@@ -106,16 +106,6 @@ public class Product implements Comparable<Product> {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Override
-	public int compareTo(Product p) {
-		if (this.price > p.getPrice())
-			return 1;
-		else if (this.price < p.getPrice())
-			return -1;
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
